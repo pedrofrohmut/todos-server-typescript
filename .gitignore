@@ -1,0 +1,14 @@
+node_modules/
+
+# Yarn
+yarn.lock
+yarn-error.log
+
+# Build
+.dist/
+
+# Env/Secret
+.env
+
+# Vim
+**.swp
