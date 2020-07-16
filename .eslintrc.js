@@ -12,6 +12,6 @@ module.exports = {
   plugins: ["@typescript-eslint"],
   rules: {
     quotes: ["error", "double", { allowTemplateLiterals: true }],
-    semi: "never"
+    semi: ["error", "never"]
   }
 }
