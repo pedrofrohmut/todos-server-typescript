@@ -25,8 +25,8 @@
     "typescript": "^3.9.6"
   },
   "scripts": {
-    "start": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "nodemon": "nodemon --exec ts-node src/index.ts",
+    "start": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "nodemon": "nodemon --exec ts-node src/server.ts",
     "build": "tsc"
   },
   "dependencies": {

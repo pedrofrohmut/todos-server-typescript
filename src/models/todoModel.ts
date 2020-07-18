@@ -9,13 +9,16 @@ export interface ITodoSchema extends Document {
   isComplete?: boolean
 }
 
-const TodoSchema = new Schema<ITodoSchema>({
-  name: { type: String, trim: true, required: true },
-  description: { type: String, trim: true },
-  task: { type: Schema.Types.ObjectId, required: true },
-  isComplete: { type: Boolean, default: false }
-}, {
-  timestamps: true
-})
+const TodoSchema = new Schema<ITodoSchema>(
+  {
+    name: { type: String, trim: true, required: true },
+    description: { type: String, trim: true },
+    task: { type: Schema.Types.ObjectId, required: true },
+    isComplete: { type: Boolean, default: false }
+  },
+  {
+    timestamps: true
+  }
+)
 
 export default model<ITodoSchema>("Todo", TodoSchema)

@@ -20,7 +20,7 @@ const UserSchema = new Schema<IUserSchema>(
   }
 )
 
-UserSchema.methods.fullName = function (): string {
+UserSchema.methods.fullName = function(): string {
   return this.firstName + "  " + this.lastName
 }
 
