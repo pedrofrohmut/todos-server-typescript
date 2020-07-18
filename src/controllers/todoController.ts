@@ -1,57 +1,37 @@
 import { Request, Response } from "express"
 
-export const findTodoByTaskId = async (
-  req: Request,
-  res: Response
-): Promise<Response> => {
-  return res.send("Find Todo By Task ID")
+class TodoController {
+  public async findTodoByTaskId(req: Request, res: Response): Promise<Response> {
+    return res.send("Find Todo By Task ID")
+  }
+
+  public async findTodoById(req: Request, res: Response): Promise<Response> {
+    return res.send("Find Todo By ID")
+  }
+
+  public async createTodo(req: Request, res: Response): Promise<Response> {
+    return res.send("Create todo")
+  }
+
+  public async updateTodo(req: Request, res: Response): Promise<Response> {
+    return res.send("update todo")
+  }
+
+  public async deleteTodo(req: Request, res: Response): Promise<Response> {
+    return res.send("delete todo")
+  }
+
+  public async setTodoAsComplete(req: Request, res: Response): Promise<Response> {
+    return res.send("set todo as complete")
+  }
+
+  public async setTodoAsNotComplete(req: Request, res: Response): Promise<Response> {
+    return res.send("set todo as NOT complete")
+  }
+
+  public async clearCompleteTodos(req: Request, res: Response): Promise<Response> {
+    return res.send("clear complete todos")
+  }
 }
 
-export const findTodoById = async (
-  req: Request,
-  res: Response
-): Promise<Response> => {
-  return res.send("Find Todo By ID")
-}
-
-export const createTodo = async (
-  req: Request,
-  res: Response
-): Promise<Response> => {
-  return res.send("Create todo")
-}
-
-export const updateTodo = async (
-  req: Request,
-  res: Response
-): Promise<Response> => {
-  return res.send("update todo")
-}
-
-export const deleteTodo = async (
-  req: Request,
-  res: Response
-): Promise<Response> => {
-  return res.send("delete todo")
-}
-
-export const setTodoAsComplete = async (
-  req: Request,
-  res: Response
-): Promise<Response> => {
-  return res.send("set todo as complete")
-}
-
-export const setTodoAsNotComplete = async (
-  req: Request,
-  res: Response
-): Promise<Response> => {
-  return res.send("set todo as NOT complete")
-}
-
-export const clearCompleteTodos = async (
-  req: Request,
-  res: Response
-): Promise<Response> => {
-  return res.send("clear complete todos")
-}
+export default new TodoController()

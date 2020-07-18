@@ -1,36 +1,25 @@
 import { Request, Response } from "express"
 
-export const findTasks = async (
-  req: Request,
-  res: Response
-): Promise<Response> => {
-  return res.send("Find Tasks")
+class TaskController {
+  public async findTasks(req: Request, res: Response): Promise<Response> {
+    return res.send("Find Tasks")
+  }
+
+  public async findTaskById(req: Request, res: Response): Promise<Response> {
+    return res.send("Find Task By ID")
+  }
+
+  public async createTask(req: Request, res: Response): Promise<Response> {
+    return res.send("Create Task")
+  }
+
+  public async updateTask(req: Request, res: Response): Promise<Response> {
+    return res.send("Update Task")
+  }
+
+  public async deleteTask(req: Request, res: Response): Promise<Response> {
+    return res.send("delete task")
+  }
 }
 
-export const findTaskById = async (
-  req: Request,
-  res: Response
-): Promise<Response> => {
-  return res.send("Find Task By ID")
-}
-
-export const createTask = async (
-  req: Request,
-  res: Response
-): Promise<Response> => {
-  return res.send("Create Task")
-}
-
-export const updateTask = async (
-  req: Request,
-  res: Response
-): Promise<Response> => {
-  return res.send("Update Task")
-}
-
-export const deleteTask = async (
-  req: Request,
-  res: Response
-): Promise<Response> => {
-  return res.send("delete task")
-}
+export default new TaskController()
