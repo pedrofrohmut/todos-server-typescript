@@ -1,6 +1,6 @@
 import { Schema, model, Document } from "mongoose"
 
-import { IUserSchema } from "./userModel"
+import { IUserSchema } from "./UserModel"
 
 export interface ITaskSchema extends Document {
   name: string

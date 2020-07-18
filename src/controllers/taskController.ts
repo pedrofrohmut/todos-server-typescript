@@ -1,8 +1,22 @@
 import { Request, Response } from "express"
 
+import TaskSchema from "../models/TaskModel"
+
 class TaskController {
   public async findTasks(req: Request, res: Response): Promise<Response> {
-    return res.send("Find Tasks")
+    try {
+      const tasks = await TaskSchema.find()
+      return res.status(200).json({
+        success: true,
+        data: tasks,
+        count: tasks.length
+      })
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Server Error: error to get all Tasks: " + err.message
+      })
+    }
   }
 
   public async findTaskById(req: Request, res: Response): Promise<Response> {
@@ -10,7 +24,7 @@ class TaskController {
   }
 
   public async createTask(req: Request, res: Response): Promise<Response> {
-    return res.send("Create Task")
+    return res.send("create task")
   }
 
   public async updateTask(req: Request, res: Response): Promise<Response> {
