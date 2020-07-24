@@ -1,6 +1,7 @@
 import express from "express"
 
 import UserController from "../controllers/UserController"
+import { authenticate } from "../middlewares/Authentication"
 
 const userRouter = express.Router()
 
@@ -22,6 +23,6 @@ userRouter.post("/login", UserController.loginUser)
 // @Desc: Authenticate user
 // @Route: GET api/v1/users/authenticate
 // @Access: Private
-userRouter.get("/authenticate", UserController.authenticateUser)
+userRouter.get("/authenticate", authenticate, UserController.authenticateUser)
 
 export default userRouter
