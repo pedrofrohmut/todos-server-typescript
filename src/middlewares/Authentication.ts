@@ -10,7 +10,6 @@ export const authenticate = (
 ): Response | void => {
   try {
     const token = req.header("x-auth-token")
-    console.log("TOKEN: " + token)
     if (!token) {
       return res.status(401).json({
         success: false,
@@ -21,7 +20,6 @@ export const authenticate = (
       throw new Error("Missing ENV: no JWT_SECRET in the server enviroment")
     }
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET) as IUserModel
-    console.log("DECODED TOKEN: ", decodedToken)
     req.user = decodedToken
     next()
   } catch (err) {
