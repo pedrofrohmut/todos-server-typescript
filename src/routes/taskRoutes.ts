@@ -4,10 +4,10 @@ import TaskController from "../controllers/taskController"
 
 const taskRouter = Router()
 
-// @Desc: Get all tasks
-// @Route: GET api/v1/tasks
+// @Desc: Get all tasks from a User
+// @Route: GET api/v1/tasks/user/:id
 // @Access: Private
-taskRouter.get("/", TaskController.findTasks)
+taskRouter.get("/user/:id", TaskController.findTasksByUserId)
 
 // @Desc: Get task by ID
 // @Route: GET api/v1/tasks/:id

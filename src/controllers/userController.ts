@@ -1,11 +1,11 @@
-import { Request, Response } from "express"
+import { Request, Response, NextFunction } from "express"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 
 import UserSchema from "../models/UserModel"
 
 class UserController {
-  public async createUser(req: Request, res: Response): Promise<Response> {
+  public async createUser(req: Request, res: Response, next: NextFunction): Promise<Response> {
     const { email, firstName, lastName, password } = req.body
     if (
       !email ||
@@ -61,7 +61,7 @@ class UserController {
     }
   }
 
-  public async loginUser(req: Request, res: Response): Promise<Response> {
+  public async loginUser(req: Request, res: Response, next: NextFunction): Promise<Response> {
     const { email, password } = req.body
     if (!email || email === "" || !password || password === "") {
       return res.status(400).json({
@@ -113,7 +113,7 @@ class UserController {
     }
   }
 
-  public async authenticateUser(req: Request, res: Response): Promise<Response> {
+  public async authenticateUser(req: Request, res: Response, next: NextFunction): Promise<Response> {
     try {
       if (!req.user || !req.user.id || req.user.id === "") {
         return res.status(400).json({
@@ -155,7 +155,7 @@ class UserController {
     }
   }
 
-  public async findUsers(req: Request, res: Response): Promise<Response> {
+  public async findUsers(req: Request, res: Response, next: NextFunction): Promise<Response> {
     try {
       const users = await UserSchema.find()
       const formatedUsers = users.map(({ _id, firstName, lastName, email }) => ({

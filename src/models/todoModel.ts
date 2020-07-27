@@ -1,6 +1,6 @@
 import { Schema, model, Document } from "mongoose"
 
-import { ITaskSchema } from "./taskModel"
+import { ITaskSchema } from "./TaskModel"
 
 export interface ITodoSchema extends Document {
   name?: string

@@ -8,7 +8,7 @@ const userRouter = express.Router()
 // @Desc: Get all users
 // @Route: GET api/v1/users
 // @Access: Private
-userRouter.get("/", UserController.findUsers)
+userRouter.get("/", authenticate, UserController.findUsers)
 
 // @Desc: Register new user
 // @Route: POST api/v1/users
