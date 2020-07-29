@@ -3,24 +3,11 @@ import mongoose from "mongoose"
 
 import TaskSchema from "../models/TaskModel"
 import UserSchema from "../models/UserModel"
+import * as TaskValidator from "../validators/TaskValidator"
 
 class TaskController {
   public async findTasksByUserId(req: Request, res: Response): Promise<Response> {
     const userId: string = req.params.id
-    if (!userId || userId === "") {
-      return res.status(400).json({
-        success: false,
-        message: "Bad Request: User ID is blank or undefined"
-      })
-    }
-    const isValidUserId: boolean = mongoose.Types.ObjectId.isValid(userId)
-    if (!isValidUserId) {
-      return res.status(400).json({
-        success: false,
-        message: "Bad Request: User ID is not valid",
-        data: { userId }
-      })
-    }
     try {
       const user = await UserSchema.findById(userId)
       if (!user) {
@@ -46,20 +33,6 @@ class TaskController {
 
   public async findTaskById(req: Request, res: Response): Promise<Response> {
     const taskId: string = req.params.id
-    if (!taskId || taskId === "") {
-      return res.status(400).json({
-        success: false,
-        message: "Bad Request: empty or blank ID"
-      })
-    }
-    const isValidId = mongoose.Types.ObjectId.isValid(taskId)
-    if (!isValidId) {
-      return res.status(400).json({
-        success: false,
-        message: "Bad Request: Invalid Task ID",
-        data: { taskId }
-      })
-    }
     try {
       const task = await TaskSchema.findById(taskId)
       if (!task) {
@@ -83,23 +56,14 @@ class TaskController {
   }
 
   public async createTask(req: Request, res: Response): Promise<Response> {
-    const { userId, name } = req.body
-    if (!userId || userId === "" || !name || name === "") {
+    const userId = req.params.id
+    const { name } = req.body
+    const isValidTaskName = TaskValidator.validateName(name)
+    if (!isValidTaskName) {
       return res.status(400).json({
         success: false,
-        message: "Bad Request: userId and/or task name is blank or undefined",
-        data: {
-          userId,
-          name
-        }
-      })
-    }
-    const isValidUserId = mongoose.Types.ObjectId.isValid(userId)
-    if (!isValidUserId) {
-      return res.status(400).json({
-        success: false,
-        message: "Bad Request: the User ID passed is not valid",
-        data: { userId }
+        message: "Bad Request: the Task name is not valid",
+        data: { name }
       })
     }
     try {
@@ -128,19 +92,12 @@ class TaskController {
 
   public async updateTask(req: Request, res: Response): Promise<Response> {
     const taskId = req.params.id
-    const isValidTaskId = taskId && mongoose.Types.ObjectId.isValid(taskId)
-    if (!isValidTaskId) {
+    const { name } = req.body
+    const isValidTaskName = TaskValidator.validateName(name)
+    if (!isValidTaskName) {
       return res.status(400).json({
         success: false,
-        message: "Bad Request: the Task ID passed is blank, undefined or invalid",
-        data: { taskId }
-      })
-    }
-    const taskName = req.body.name
-    if (!taskName || taskName === "") {
-      return res.status(400).json({
-        success: false,
-        message: "Bad Request: the Task name is blank or undefined"
+        message: "Bad Request: the Task name is not valid"
       })
     }
     try {
@@ -152,7 +109,7 @@ class TaskController {
           data: { taskId }
         })
       }
-      await taskToUpdate.updateOne({ name: taskName })
+      await taskToUpdate.updateOne({ name })
       return res.status(200).json({
         success: true,
         message: "Success: Task updated"
@@ -167,20 +124,6 @@ class TaskController {
 
   public async deleteTask(req: Request, res: Response): Promise<Response> {
     const taskId = req.params.id
-    if (!taskId || taskId === "") {
-      return res.status(400).json({
-        success: false,
-        message: "Bad Request: the Task ID passed is blank or undefined"
-      })
-    }
-    const isValidTaskId = mongoose.Types.ObjectId.isValid(taskId)
-    if (!isValidTaskId) {
-      return res.status(400).json({
-        success: false,
-        message: "Bad Request: the Task ID passed in not valid",
-        data: { taskId }
-      })
-    }
     try {
       const taskToDelete = await TaskSchema.findById(taskId)
       if (!taskToDelete) {

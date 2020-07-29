@@ -8,14 +8,6 @@ import * as TodoValidator from "../validators/TodoValidator"
 class TodoController {
   public async findTodoByTaskId(req: Request, res: Response): Promise<Response> {
     const taskId = req.params.id
-    const isValidId = MongooseValidator.validateId(taskId)
-    if (!isValidId) {
-      return res.status(400).json({
-        success: false,
-        message: "Bad Request: the Task ID passed is not valid",
-        data: { taskId }
-      })
-    }
     try {
       const task = await TaskSchema.findById(taskId)
       if (!task) {
@@ -44,14 +36,6 @@ class TodoController {
 
   public async findTodoById(req: Request, res: Response): Promise<Response> {
     const todoId = req.params.id
-    const isValidId = MongooseValidator.validateId(todoId)
-    if (!isValidId) {
-      return res.status(400).json({
-        success: false,
-        message: "Bad Request: the Todo ID passed is not valid",
-        data: { todoId }
-      })
-    }
     try {
       const todo = await TodoSchema.findById(todoId)
       if (!todo) {
@@ -76,13 +60,6 @@ class TodoController {
 
   public async createTodo(req: Request, res: Response): Promise<Response> {
     const taskId = req.params.id
-    const isValidTaskId = MongooseValidator.validateId(taskId)
-    if (!isValidTaskId) {
-      return res.status(400).json({
-        success: false,
-        message: "Bad Request: the passed Task ID in not valid"
-      })
-    }
     const { name, description } = req.body
     const isValidName = TodoValidator.validateName(name)
     const isValidDescription = TodoValidator.validateDescription(description)
@@ -123,18 +100,9 @@ class TodoController {
 
   public async updateTodo(req: Request, res: Response): Promise<Response> {
     const todoId = req.params.id
-    const isValidTodoId = MongooseValidator.validateId(todoId)
-    if (!isValidTodoId) {
-      return res.status(400).json({
-        success: false,
-        message: "Bad Request: the Todo ID passed is not valid",
-        data: { todoId }
-      })
-    }
     const { name, description, task: taskId } = req.body
     const isValidName = TodoValidator.validateName(name)
     const isValidDescription = TodoValidator.validateDescription(description)
-    console.log("valid name: ", isValidName, "   valid description: ", isValidDescription)
     if (!isValidName || !isValidDescription) {
       return res.status(400).json({
         success: false,
@@ -185,14 +153,6 @@ class TodoController {
 
   public async deleteTodo(req: Request, res: Response): Promise<Response> {
     const todoId: string = req.params.id
-    const isValidTodoId = MongooseValidator.validateId(todoId)
-    if (!isValidTodoId) {
-      return res.status(400).json({
-        success: false,
-        message: "Bad Request: the Todo ID passed is not valid",
-        data: { todoId }
-      })
-    }
     try {
       const todo = await TodoSchema.findById(todoId)
       if (!todo) {
@@ -217,14 +177,6 @@ class TodoController {
 
   public async setTodoAsComplete(req: Request, res: Response): Promise<Response> {
     const todoId = req.params.id
-    const isValidTodoId = MongooseValidator.validateId(todoId)
-    if (!isValidTodoId) {
-      return res.status(400).json({
-        success: false,
-        message: "Bad Request: the Todo ID passed is not valid",
-        data: { todoId }
-      })
-    }
     try {
       const todo = await TodoSchema.findById(todoId)
       if (!todo) {
@@ -251,14 +203,6 @@ class TodoController {
 
   public async setTodoAsNotComplete(req: Request, res: Response): Promise<Response> {
     const todoId = req.params.id
-    const isValidTodoId = MongooseValidator.validateId(todoId)
-    if (!isValidTodoId) {
-      return res.status(400).json({
-        success: false,
-        message: "Bad Request: the Todo ID passed is not valid",
-        data: { todoId }
-      })
-    }
     try {
       const todo = await TodoSchema.findById(todoId)
       if (!todo) {
@@ -285,14 +229,6 @@ class TodoController {
 
   public async clearCompleteTodos(req: Request, res: Response): Promise<Response> {
     const taskId = req.params.id
-    const isValidTaskId = MongooseValidator.validateId(taskId)
-    if (!isValidTaskId) {
-      return res.status(400).json({
-        success: false,
-        message: "Bad Request: the Task ID passed is not valid",
-        data: { taskId }
-      })
-    }
     try {
       const task = await TaskSchema.findById(taskId)
       if (!task) {
