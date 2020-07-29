@@ -184,19 +184,137 @@ class TodoController {
   }
 
   public async deleteTodo(req: Request, res: Response): Promise<Response> {
-    return res.send("delete todo")
+    const todoId: string = req.params.id
+    const isValidTodoId = MongooseValidator.validateId(todoId)
+    if (!isValidTodoId) {
+      return res.status(400).json({
+        success: false,
+        message: "Bad Request: the Todo ID passed is not valid",
+        data: { todoId }
+      })
+    }
+    try {
+      const todo = await TodoSchema.findById(todoId)
+      if (!todo) {
+        return res.status(404).json({
+          success: false,
+          message: "Not Found: no Todo found with the passed ID",
+          data: { todoId }
+        })
+      }
+      await TodoSchema.deleteOne({ _id: todoId })
+      return res.status(200).json({
+        success: true,
+        message: "Success: todo deleted"
+      })
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Server Error: error to delete Todo: " + err.message
+      })
+    }
   }
 
   public async setTodoAsComplete(req: Request, res: Response): Promise<Response> {
-    return res.send("set todo as complete")
+    const todoId = req.params.id
+    const isValidTodoId = MongooseValidator.validateId(todoId)
+    if (!isValidTodoId) {
+      return res.status(400).json({
+        success: false,
+        message: "Bad Request: the Todo ID passed is not valid",
+        data: { todoId }
+      })
+    }
+    try {
+      const todo = await TodoSchema.findById(todoId)
+      if (!todo) {
+        return res.status(404).json({
+          success: false,
+          message: "Not Found: no Todo found with the passed ID",
+          data: { todoId }
+        })
+      }
+      await todo.updateOne({ isComplete: true })
+      todo.isComplete = true
+      return res.status(200).json({
+        success: true,
+        message: "Success: Todo set as complete",
+        data: { todo }
+      })
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Server Error: error to set Todo as complete: " + err.messsage
+      })
+    }
   }
 
   public async setTodoAsNotComplete(req: Request, res: Response): Promise<Response> {
-    return res.send("set todo as NOT complete")
+    const todoId = req.params.id
+    const isValidTodoId = MongooseValidator.validateId(todoId)
+    if (!isValidTodoId) {
+      return res.status(400).json({
+        success: false,
+        message: "Bad Request: the Todo ID passed is not valid",
+        data: { todoId }
+      })
+    }
+    try {
+      const todo = await TodoSchema.findById(todoId)
+      if (!todo) {
+        return res.status(404).json({
+          success: false,
+          message: "Not Found: no Todo found with the passed ID",
+          data: { todoId }
+        })
+      }
+      await todo.updateOne({ isComplete: false })
+      todo.isComplete = false
+      return res.status(200).json({
+        success: true,
+        message: "Success: Todo set as NOT complete",
+        data: { todo }
+      })
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Server Error: error to set Todo as NOT complete: " + err.messsage
+      })
+    }
   }
 
   public async clearCompleteTodos(req: Request, res: Response): Promise<Response> {
-    return res.send("clear complete todos")
+    const taskId = req.params.id
+    const isValidTaskId = MongooseValidator.validateId(taskId)
+    if (!isValidTaskId) {
+      return res.status(400).json({
+        success: false,
+        message: "Bad Request: the Task ID passed is not valid",
+        data: { taskId }
+      })
+    }
+    try {
+      const task = await TaskSchema.findById(taskId)
+      if (!task) {
+        return res.status(404).json({
+          success: false,
+          message: "Not Found: no Task found with the passed ID",
+          data: { taskId }
+        })
+      }
+      const completeTodos = await TodoSchema.find({ task: taskId, isComplete: true })
+      await TodoSchema.deleteMany({ isComplete: true, task: taskId })
+      return res.status(200).json({
+        success: true,
+        messsage: "Success: complete Todos cleared from Task",
+        data: { completeTodos }
+      })
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Server Error: error to clear complete todos: " + err.message
+      })
+    }
   }
 }
 
