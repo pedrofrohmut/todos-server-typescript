@@ -153,15 +153,9 @@ class TaskController {
         })
       }
       await taskToUpdate.updateOne({ name: taskName })
-      const beforeChanges = { id: taskId, name: taskToUpdate.name }
-      const afterChanges = { id: taskId, name: taskName }
       return res.status(200).json({
         success: true,
-        message: "Success: Task updated",
-        data: {
-          beforeChanges,
-          afterChanges
-        }
+        message: "Success: Task updated"
       })
     } catch (err) {
       return res.status(500).json({

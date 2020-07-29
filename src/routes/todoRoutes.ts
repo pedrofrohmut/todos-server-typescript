@@ -1,6 +1,6 @@
 import { Router } from "express"
 
-import TodoController from "../controllers/todoController"
+import TodoController from "../controllers/TodoController"
 
 const todoRouter = Router()
 
@@ -17,7 +17,7 @@ todoRouter.get("/:id", TodoController.findTodoById)
 // @Desc: Create a todo
 // @Route: POST api/v1/todos/task/:id
 // @Access: Private
-todoRouter.post("/", TodoController.createTodo)
+todoRouter.post("/task/:id", TodoController.createTodo)
 
 // @Desc: Update todo by ID
 // @Route: PUT api/v1/todos/:id
