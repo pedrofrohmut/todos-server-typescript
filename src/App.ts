@@ -2,9 +2,9 @@ import express, { Application } from "express"
 import cors from "cors"
 import mongoose from "mongoose"
 
-import UserRoutes from "./routes/UserRoutes"
-import TaskRoutes from "./routes/TaskRoutes"
-import TodoRoutes from "./routes/TodoRoutes"
+import UserRoutes from "./routes/UserRoute"
+import TaskRoutes from "./routes/TaskRoute"
+import TodoRoutes from "./routes/TodoRoute"
 
 export default class App {
   public expressApp: Application
