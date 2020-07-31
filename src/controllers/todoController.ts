@@ -1,11 +1,11 @@
 import { Request, Response } from "express"
 
-import TodoSchema from "../models/TodoModel"
+import TodoModel from "../models/TodoModel"
 
 class TodoController {
   public async findTodoByTaskId(req: Request, res: Response): Promise<Response> {
     try {
-      const todos = await TodoSchema.find({ task: req.params.id })
+      const todos = await TodoModel.find({ task: req.params.id })
       return res.status(200).json({
         success: true,
         message: "Success: todos found",
@@ -24,7 +24,7 @@ class TodoController {
 
   public async findTodoById(req: Request, res: Response): Promise<Response> {
     try {
-      const todo = await TodoSchema.findById(req.params.id)
+      const todo = await TodoModel.findById(req.params.id)
       return res.status(200).json({
         success: true,
         message: "Success: Todo found",
@@ -41,7 +41,7 @@ class TodoController {
   public async createTodo(req: Request, res: Response): Promise<Response> {
     const { name, description } = req.body
     try {
-      const createdTodo = await TodoSchema.create({ name, description, task: req.params.id })
+      const createdTodo = await TodoModel.create({ name, description, task: req.params.id })
       return res.status(200).json({
         success: true,
         message: "Success: todo created",
@@ -60,7 +60,7 @@ class TodoController {
   public async updateTodo(req: Request, res: Response): Promise<Response> {
     try {
       const { name, description } = req.body
-      await TodoSchema.updateOne({ _id: req.params.id }, { name, description })
+      await TodoModel.updateOne({ _id: req.params.id }, { name, description })
       return res.status(200).json({
         success: true,
         message: "Success: Todo updated"
@@ -75,7 +75,7 @@ class TodoController {
 
   public async deleteTodo(req: Request, res: Response): Promise<Response> {
     try {
-      await TodoSchema.deleteOne({ _id: req.params.id })
+      await TodoModel.deleteOne({ _id: req.params.id })
       return res.status(200).json({
         success: true,
         message: "Success: todo deleted"
@@ -90,7 +90,7 @@ class TodoController {
 
   public async setTodoAsComplete(req: Request, res: Response): Promise<Response> {
     try {
-      await TodoSchema.updateOne({ _id: req.params.id }, { isComplete: true })
+      await TodoModel.updateOne({ _id: req.params.id }, { isComplete: true })
       return res.status(200).json({
         success: true,
         message: "Success: Todo set as complete"
@@ -105,7 +105,7 @@ class TodoController {
 
   public async setTodoAsNotComplete(req: Request, res: Response): Promise<Response> {
     try {
-      await TodoSchema.updateOne({ _id: req.params.id }, { isComplete: false })
+      await TodoModel.updateOne({ _id: req.params.id }, { isComplete: false })
       return res.status(200).json({
         success: true,
         message: "Success: Todo set as NOT complete"
@@ -120,7 +120,7 @@ class TodoController {
 
   public async clearCompleteTodos(req: Request, res: Response): Promise<Response> {
     try {
-      await TodoSchema.deleteMany({ isComplete: true, task: req.params.id })
+      await TodoModel.deleteMany({ isComplete: true, task: req.params.id })
       return res.status(200).json({
         success: true,
         messsage: "Success: complete Todos cleared from Task"

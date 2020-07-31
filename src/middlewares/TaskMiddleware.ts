@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express"
 
-import TaskSchema from "../models/TaskModel"
+import TaskModel from "../models/TaskModel"
 import * as TaskValidator from "../validators/TaskValidator"
 
 export const checkTaskExists = async (
@@ -10,7 +10,7 @@ export const checkTaskExists = async (
 ): Promise<Response | void> => {
   const taskId = req.params.id
   try {
-    const task = await TaskSchema.findById(taskId)
+    const task = await TaskModel.findById(taskId)
     if (!task) {
       return res.status(404).json({
         success: false,

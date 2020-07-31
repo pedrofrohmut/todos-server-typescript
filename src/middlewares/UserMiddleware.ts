@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express"
 
-import UserSchema from "../models/UserModel"
+import UserModel from "../models/UserModel"
 
 export const checkUserExists = async (
   req: Request,
@@ -9,7 +9,7 @@ export const checkUserExists = async (
 ): Promise<Response | void> => {
   const userId = req.params.id
   try {
-    const user = await UserSchema.findById(userId)
+    const user = await UserModel.findById(userId)
     if (!user) {
       return res.status(404).json({
         success: false,

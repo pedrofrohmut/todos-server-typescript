@@ -1,15 +1,15 @@
 import { Schema, model, Document } from "mongoose"
 
-import { ITaskSchema } from "./TaskModel"
+import { ITaskModel } from "./TaskModel"
 
-export interface ITodoSchema extends Document {
+export interface ITodoModel extends Document {
   name?: string
   description?: string
-  task?: ITaskSchema["_id"]
+  task?: ITaskModel["_id"]
   isComplete?: boolean
 }
 
-const TodoSchema = new Schema<ITodoSchema>(
+const TodoSchema = new Schema<ITodoModel>(
   {
     name: { type: String, trim: true, required: true },
     description: { type: String, trim: true },
@@ -21,4 +21,4 @@ const TodoSchema = new Schema<ITodoSchema>(
   }
 )
 
-export default model<ITodoSchema>("Todo", TodoSchema)
+export default model<ITodoModel>("Todo", TodoSchema)

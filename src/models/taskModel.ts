@@ -1,13 +1,13 @@
 import { Schema, model, Document } from "mongoose"
 
-import { IUserSchema } from "./UserModel"
+import { IUserModel } from "./UserModel"
 
-export interface ITaskSchema extends Document {
+export interface ITaskModel extends Document {
   name: string
-  user: IUserSchema["_id"]
+  user: IUserModel["_id"]
 }
 
-const TaskSchema = new Schema<ITaskSchema>(
+const TaskSchema = new Schema<ITaskModel>(
   {
     name: { type: String, trim: true, required: true },
     user: { type: Schema.Types.ObjectId, required: true }
@@ -17,4 +17,4 @@ const TaskSchema = new Schema<ITaskSchema>(
   }
 )
 
-export default model<ITaskSchema>("Task", TaskSchema)
+export default model<ITaskModel>("Task", TaskSchema)

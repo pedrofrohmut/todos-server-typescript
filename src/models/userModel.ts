@@ -1,6 +1,6 @@
 import { Schema, model, Document } from "mongoose"
 
-export interface IUserSchema extends Document {
+export interface IUserModel extends Document {
   email?: string
   firstName?: string
   lastName?: string
@@ -8,7 +8,7 @@ export interface IUserSchema extends Document {
   fullName: () => string
 }
 
-const UserSchema = new Schema<IUserSchema>(
+const UserSchema = new Schema<IUserModel>(
   {
     email: { type: String, required: true, unique: true },
     firstName: { type: String, required: true },
@@ -24,4 +24,4 @@ UserSchema.methods.fullName = function(): string {
   return this.firstName + "  " + this.lastName
 }
 
-export default model<IUserSchema>("User", UserSchema)
+export default model<IUserModel>("User", UserSchema)

@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express"
 import jwt from "jsonwebtoken"
 
 import * as MongooseValidator from "../validators/MongooseValidator"
-import UserSchema from "../models/UserModel"
+import UserModel from "../models/UserModel"
 
 interface IUserToken {
   id?: string
@@ -50,7 +50,7 @@ export const authenticate = async (
       data: { userId: req.user.id }
     })
   }
-  const user = await UserSchema.findById(req.user.id)
+  const user = await UserModel.findById(req.user.id)
   if (!user) {
     return res.status(404).json({
       success: false,

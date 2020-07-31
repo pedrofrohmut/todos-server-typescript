@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express"
 
-import TodoSchema from "../models/TodoModel"
-import TaskSchema from "../models/TaskModel"
+import TodoModel from "../models/TodoModel"
+import TaskModel from "../models/TaskModel"
 import * as MongooseValidator from "../validators/MongooseValidator"
 import * as TodoValidator from "../validators/TodoValidator"
 
@@ -12,7 +12,7 @@ export const checkTodoExists = async (
 ): Promise<Response | void> => {
   const todoId = req.params.id
   try {
-    const todo = await TodoSchema.findById(todoId)
+    const todo = await TodoModel.findById(todoId)
     if (!todo) {
       return res.status(404).json({
         success: false,
@@ -77,7 +77,7 @@ export const validateTask = async (
       data: { taskId }
     })
   }
-  const task = await TaskSchema.findById(taskId)
+  const task = await TaskModel.findById(taskId)
   if (!task) {
     return res.status(404).json({
       success: false,

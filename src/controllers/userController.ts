@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 
-import UserSchema from "../models/UserModel"
+import UserModel from "../models/UserModel"
 
 class UserController {
   public async createUser(req: Request, res: Response, next: NextFunction): Promise<Response> {
@@ -24,7 +24,7 @@ class UserController {
     }
     try {
       // Check if e-mail is taken
-      const existingUser = await UserSchema.findOne({ email })
+      const existingUser = await UserModel.findOne({ email })
       if (existingUser) {
         return res.status(400).json({
           success: false,
@@ -34,7 +34,7 @@ class UserController {
       // Hash password
       const salt = await bcrypt.genSalt(10)
       const hashedPassword = await bcrypt.hash(password, salt)
-      const createdUser = await UserSchema.create({
+      const createdUser = await UserModel.create({
         email,
         firstName,
         lastName,
@@ -71,7 +71,7 @@ class UserController {
       })
     }
     try {
-      const user = await UserSchema.findOne({ email })
+      const user = await UserModel.findOne({ email })
       if (!user) {
         return res.status(404).json({
           success: false,
@@ -129,7 +129,7 @@ class UserController {
               }
         })
       }
-      const user = await UserSchema.findById(req.user.id)
+      const user = await UserModel.findById(req.user.id)
       if (!user) {
         return res.status(404).json({
           success: false,
@@ -157,7 +157,7 @@ class UserController {
 
   public async findUsers(req: Request, res: Response, next: NextFunction): Promise<Response> {
     try {
-      const users = await UserSchema.find()
+      const users = await UserModel.find()
       const formatedUsers = users.map(({ _id, firstName, lastName, email }) => ({
         id: _id,
         firstName,

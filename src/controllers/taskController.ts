@@ -1,11 +1,11 @@
 import { Request, Response } from "express"
 
-import TaskSchema from "../models/TaskModel"
+import TaskModel from "../models/TaskModel"
 
 class TaskController {
   public async findTasksByUserId(req: Request, res: Response): Promise<Response> {
     try {
-      const tasks = await TaskSchema.find({ user: req.params.id })
+      const tasks = await TaskModel.find({ user: req.params.id })
       return res.status(200).json({
         success: true,
         data: tasks,
@@ -21,7 +21,7 @@ class TaskController {
 
   public async findTaskById(req: Request, res: Response): Promise<Response> {
     try {
-      const task = await TaskSchema.findById(req.params.id)
+      const task = await TaskModel.findById(req.params.id)
       return res.status(200).json({
         success: true,
         message: "Success: task found",
@@ -37,7 +37,7 @@ class TaskController {
 
   public async createTask(req: Request, res: Response): Promise<Response> {
     try {
-      const createdTask = await TaskSchema.create({ name: req.body.name, user: req.params.id })
+      const createdTask = await TaskModel.create({ name: req.body.name, user: req.params.id })
       return res.status(200).json({
         success: true,
         message: "Success: task created",
@@ -55,7 +55,7 @@ class TaskController {
 
   public async updateTask(req: Request, res: Response): Promise<Response> {
     try {
-      await TaskSchema.updateOne({ _id: req.params.id }, { name: req.body.name })
+      await TaskModel.updateOne({ _id: req.params.id }, { name: req.body.name })
       return res.status(200).json({
         success: true,
         message: "Success: Task updated"
@@ -70,7 +70,7 @@ class TaskController {
 
   public async deleteTask(req: Request, res: Response): Promise<Response> {
     try {
-      await TaskSchema.deleteOne({ _id: req.params.id })
+      await TaskModel.deleteOne({ _id: req.params.id })
       return res.status(200).json({
         success: true,
         message: "Success: Task deleted"
