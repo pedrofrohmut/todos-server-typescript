@@ -115,21 +115,21 @@ class UserController {
 
   public async authenticateUser(req: Request, res: Response, next: NextFunction): Promise<Response> {
     try {
-      if (!req.user || !req.user.id || req.user.id === "") {
+      if (!req.userToken || !req.userToken.id || req.userToken.id === "") {
         return res.status(400).json({
           success: false,
           message: "Bad Request: authenticated request has invalid user or user.id",
-          data: !req.user
+          data: !req.userToken
             ? "No user in the request"
-            : !req.user.id
+            : !req.userToken.id
               ? "No User ID in the Request"
               : {
-                user: req.user,
-                userId: req.user && req.user.id ? req.user.id : "No ID"
+                user: req.userToken,
+                userId: req.userToken && req.userToken.id ? req.userToken.id : "No ID"
               }
         })
       }
-      const user = await UserModel.findById(req.user.id)
+      const user = await UserModel.findById(req.userToken.id)
       if (!user) {
         return res.status(404).json({
           success: false,

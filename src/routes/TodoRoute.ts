@@ -4,6 +4,7 @@ import TodoController from "../controllers/TodoController"
 import * as MongooseMiddleware from "../middlewares/MongooseMiddleware"
 import * as TaskMiddleware from "../middlewares/TaskMiddleware"
 import * as TodoMiddleware from "../middlewares/TodoMiddleware"
+import * as UserMiddleware from "../middlewares/UserMiddleware"
 
 const todoRouter = Router()
 
@@ -12,6 +13,8 @@ const todoRouter = Router()
 // @Access: Private
 todoRouter.get(
   "/task/:id",
+  UserMiddleware.verifyAuthenticationToken,
+  UserMiddleware.validateUserFromToken,
   MongooseMiddleware.validateId,
   TaskMiddleware.checkTaskExists,
   TodoController.findTodoByTaskId)
@@ -21,6 +24,8 @@ todoRouter.get(
 // @Access: Private
 todoRouter.get(
   "/:id",
+  UserMiddleware.verifyAuthenticationToken,
+  UserMiddleware.validateUserFromToken,
   MongooseMiddleware.validateId,
   TodoMiddleware.checkTodoExists,
   TodoController.findTodoById)
@@ -30,6 +35,8 @@ todoRouter.get(
 // @Access: Private
 todoRouter.post(
   "/task/:id",
+  UserMiddleware.verifyAuthenticationToken,
+  UserMiddleware.validateUserFromToken,
   MongooseMiddleware.validateId,
   TodoMiddleware.validateName,
   TodoMiddleware.validateDescription,
@@ -41,6 +48,8 @@ todoRouter.post(
 // @Access: Private
 todoRouter.put(
   "/:id",
+  UserMiddleware.verifyAuthenticationToken,
+  UserMiddleware.validateUserFromToken,
   MongooseMiddleware.validateId,
   TodoMiddleware.validateName,
   TodoMiddleware.validateDescription,
@@ -53,6 +62,8 @@ todoRouter.put(
 // @Access: Private
 todoRouter.delete(
   "/:id",
+  UserMiddleware.verifyAuthenticationToken,
+  UserMiddleware.validateUserFromToken,
   MongooseMiddleware.validateId,
   TodoMiddleware.checkTodoExists,
   TodoController.deleteTodo)
@@ -62,6 +73,8 @@ todoRouter.delete(
 // @Access: Private
 todoRouter.patch(
   "/:id/iscomplete",
+  UserMiddleware.verifyAuthenticationToken,
+  UserMiddleware.validateUserFromToken,
   MongooseMiddleware.validateId,
   TodoMiddleware.checkTodoExists,
   TodoController.setTodoAsComplete)
@@ -71,6 +84,8 @@ todoRouter.patch(
 // @Access: Private
 todoRouter.patch(
   "/:id/isnotcomplete",
+  UserMiddleware.verifyAuthenticationToken,
+  UserMiddleware.validateUserFromToken,
   MongooseMiddleware.validateId,
   TodoMiddleware.checkTodoExists,
   TodoController.setTodoAsNotComplete)
@@ -80,6 +95,8 @@ todoRouter.patch(
 // @Access: Private
 todoRouter.delete(
   "/clearcomplete/task/:id",
+  UserMiddleware.verifyAuthenticationToken,
+  UserMiddleware.validateUserFromToken,
   MongooseMiddleware.validateId,
   TaskMiddleware.checkTaskExists,
   TodoController.clearCompleteTodos)

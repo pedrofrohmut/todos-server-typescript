@@ -12,6 +12,8 @@ const taskRouter = Router()
 // @Access: Private
 taskRouter.get(
   "/user/:id",
+  UserMiddleware.verifyAuthenticationToken,
+  UserMiddleware.validateUserFromToken,
   MongooseMiddleware.validateId,
   UserMiddleware.checkUserExists,
   TaskController.findTasksByUserId)
@@ -21,6 +23,8 @@ taskRouter.get(
 // @Access: Private
 taskRouter.get(
   "/:id",
+  UserMiddleware.verifyAuthenticationToken,
+  UserMiddleware.validateUserFromToken,
   MongooseMiddleware.validateId,
   TaskMiddleware.checkTaskExists,
   TaskController.findTaskById)
@@ -30,6 +34,8 @@ taskRouter.get(
 // @Access: Private
 taskRouter.post(
   "/user/:id",
+  UserMiddleware.verifyAuthenticationToken,
+  UserMiddleware.validateUserFromToken,
   MongooseMiddleware.validateId,
   UserMiddleware.checkUserExists,
   TaskMiddleware.validateTaskName,
@@ -40,6 +46,8 @@ taskRouter.post(
 // @Access: Private
 taskRouter.put(
   "/:id",
+  UserMiddleware.verifyAuthenticationToken,
+  UserMiddleware.validateUserFromToken,
   MongooseMiddleware.validateId,
   TaskMiddleware.validateTaskName,
   TaskMiddleware.checkTaskExists,
@@ -50,6 +58,8 @@ taskRouter.put(
 // @Access: Private
 taskRouter.delete(
   "/:id",
+  UserMiddleware.verifyAuthenticationToken,
+  UserMiddleware.validateUserFromToken,
   MongooseMiddleware.validateId,
   TaskMiddleware.checkTaskExists,
   TaskController.deleteTask)

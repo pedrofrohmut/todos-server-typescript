@@ -4,6 +4,6 @@ interface IUser {
 
 declare namespace Express {
   interface Request {
-    user?: IUser
+    userToken?: IUser
   }
 }
