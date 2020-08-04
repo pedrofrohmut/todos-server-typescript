@@ -41,35 +41,7 @@ class UserController {
   }
 
   public async loginUser(req: Request, res: Response): Promise<Response> {
-    // const { email, password } = req.body
-    // if (!email || email === "" || !password || password === "") {
-    //   return res.status(400).json({
-    //     success: false,
-    //     message: "Bad Request: e-mail or password are either null, blank or invalid",
-    //     data: { email }
-    //   })
-    // }
     try {
-      // const user = await UserModel.findOne({ email })
-      // if (!user) {
-      //   return res.status(404).json({
-      //     success: false,
-      //     message: "Not Found: no user found with the passed e-mail",
-      //     data: email
-      //   })
-      // }
-
-      // if (!user.password || user.password === "") {
-      //   throw new Error("Missing Data: There is no password saved for this user")
-      // }
-      // const passwordMatch = await bcrypt.compare(password, user.password)
-      // if (!passwordMatch) {
-      //   return res.status(400).json({
-      //     success: false,
-      //     message: "Invalid Password: the password did not match the passed e-mail",
-      //     data: email
-      //   })
-      // }
       // TODO: make service: findUserByEmail
       const user = await UserModel.findOne({ email: req.body.email })
       if (!user) {
@@ -103,28 +75,8 @@ class UserController {
 
   public async authenticateUser(req: Request, res: Response): Promise<Response> {
     try {
-      // if (!req.userToken || !req.userToken.id || req.userToken.id === "") {
-      //   return res.status(400).json({
-      //     success: false,
-      //     message: "Bad Request: authenticated request has invalid user or user.id",
-      //     data: !req.userToken
-      //       ? "No user in the request"
-      //       : !req.userToken.id
-      //         ? "No User ID in the Request"
-      //         : {
-      //           user: req.userToken,
-      //           userId: req.userToken && req.userToken.id ? req.userToken.id : "No ID"
-      //         }
-      //   })
-      // }
       // TODO: make service: findById that return only User
       const user = await UserModel.findById(req.userToken!.id)
-      // if (!user) {
-      //   return res.status(404).json({
-      //     success: false,
-      //     message: "Not Found: no user found with the user.id in the authenticated request"
-      //   })
-      // }
       // TODO: take out non null assertion when possible
       const { _id, firstName, lastName, email } = user!
       return res.status(200).json({
