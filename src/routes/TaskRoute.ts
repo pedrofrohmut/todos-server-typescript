@@ -15,7 +15,7 @@ taskRouter.get(
   UserMiddleware.verifyAuthenticationToken,
   UserMiddleware.validateUserFromToken,
   MongooseMiddleware.validateId,
-  UserMiddleware.checkUserExists,
+  UserMiddleware.checkUserExistsById,
   TaskController.findTasksByUserId)
 
 // @Desc: Get task by ID
@@ -37,7 +37,7 @@ taskRouter.post(
   UserMiddleware.verifyAuthenticationToken,
   UserMiddleware.validateUserFromToken,
   MongooseMiddleware.validateId,
-  UserMiddleware.checkUserExists,
+  UserMiddleware.checkUserExistsById,
   TaskMiddleware.validateTaskName,
   TaskController.createTask)
 

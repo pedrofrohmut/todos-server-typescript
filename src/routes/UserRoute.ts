@@ -5,20 +5,16 @@ import * as UserMiddleware from "../middlewares/UserMiddleware"
 
 const userRouter = express.Router()
 
-// @Desc: Get all users
-// @Route: GET api/v1/users
-// @Access: Private
-userRouter.get(
-  "/",
-  UserMiddleware.verifyAuthenticationToken,
-  UserMiddleware.validateUserFromToken,
-  UserController.findUsers)
-
 // @Desc: Register new user
 // @Route: POST api/v1/users
 // @Access: Public
 userRouter.post(
   "/",
+  UserMiddleware.validateEmail,
+  UserMiddleware.validateFirstName,
+  UserMiddleware.validateLastName,
+  UserMiddleware.validatePassword,
+  UserMiddleware.checkEmailIsNotTaken,
   UserController.createUser)
 
 // @Desc: Log in user
@@ -26,6 +22,10 @@ userRouter.post(
 // @Access: Public
 userRouter.post(
   "/login",
+  UserMiddleware.validateEmail,
+  UserMiddleware.validatePassword,
+  UserMiddleware.checkUserExistsByEmail,
+  UserMiddleware.matchPasswordByEmail,
   UserController.loginUser)
 
 // @Desc: Authenticate user
@@ -36,5 +36,14 @@ userRouter.get(
   UserMiddleware.verifyAuthenticationToken,
   UserMiddleware.validateUserFromToken,
   UserController.authenticateUser)
+
+// @Desc: Get all users
+// @Route: GET api/v1/users
+// @Access: Private
+userRouter.get(
+  "/",
+  UserMiddleware.verifyAuthenticationToken,
+  UserMiddleware.validateUserFromToken,
+  UserController.findUsers)
 
 export default userRouter
