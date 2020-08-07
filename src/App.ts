@@ -13,8 +13,17 @@ import LoginUserRoute from "./routes/users/LoginUserRoute"
 import CreateTaskRoute from "./routes/tasks/CreateTaskRoute"
 import DeleteTaskRoute from "./routes/tasks/DeleteTaskRoute"
 import FindTaskByIdRoute from "./routes/tasks/FindTaskByIdRoute"
-import FindTaskByUserIdRoute from "./routes/tasks/FindTaskByUserIdRoute"
+import FindTasksByUserIdRoute from "./routes/tasks/FindTasksByUserIdRoute"
 import UpdateTaskRoute from "./routes/tasks/UpdateTaskRoute"
+
+import ClearCompleteTodosByTaskIdRoute from "./routes/todos/ClearCompleteTodosByTaskIdRoute"
+import CreateTodoRoute from "./routes/todos/CreateTodoRoute"
+import DeleteTodoRoute from "./routes/todos/DeleteTodoRoute"
+import FindTodoByIdRoute from "./routes/todos/FindTodoByIdRoute"
+import FindTodosByTaskIdRoute from "./routes/todos/FindTodosByTaskIdRoute"
+import SetTodoAsCompleteRoute from "./routes/todos/SetTodoAsCompleteRoute"
+import SetTodoAsNotCompleteRoute from "./routes/todos/SetTodoAsNotCompleteRoute"
+import UpdateTodoRoute from "./routes/todos/UpdateTodoRoute"
 
 export default class App {
   public expressApp: Application
@@ -75,7 +84,17 @@ export default class App {
     this.expressApp.use("/api/v1/tasks", CreateTaskRoute)
     this.expressApp.use("/api/v1/tasks", DeleteTaskRoute)
     this.expressApp.use("/api/v1/tasks", FindTaskByIdRoute)
-    this.expressApp.use("/api/v1/tasks", FindTaskByUserIdRoute)
+    this.expressApp.use("/api/v1/tasks", FindTasksByUserIdRoute)
     this.expressApp.use("/api/v1/tasks", UpdateTaskRoute)
+
+    // Todo Routes
+    this.expressApp.use("/api/v1/todos", ClearCompleteTodosByTaskIdRoute)
+    this.expressApp.use("/api/v1/todos", CreateTodoRoute)
+    this.expressApp.use("/api/v1/todos", DeleteTodoRoute)
+    this.expressApp.use("/api/v1/todos", FindTodoByIdRoute)
+    this.expressApp.use("/api/v1/todos", FindTodosByTaskIdRoute)
+    this.expressApp.use("/api/v1/todos", SetTodoAsCompleteRoute)
+    this.expressApp.use("/api/v1/todos", SetTodoAsNotCompleteRoute)
+    this.expressApp.use("/api/v1/todos", UpdateTodoRoute)
   }
 }

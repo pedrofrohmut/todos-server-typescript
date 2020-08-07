@@ -1,20 +1,28 @@
 import User from "./User"
 
+interface TaskParams {
+  id?: string
+  name?: string
+  userId?: string
+  user?: User
+}
+
 class Task {
-  private id: string
-  private name: string
+  readonly id: string
+  readonly name: string
 
-  private userId: string
-  private user?: User
+  readonly userId: string
+  readonly user?: User
 
-  private constructor(task?: Task) {
+  private constructor(task?: TaskParams) {
     this.id = task && task.id ? task.id : ""
     this.name = task && task.name ? task.name : ""
     this.userId = task && task.userId ? task.userId : ""
+    this.user = task && task.user ? task.user : User.getInstance()
   }
 
-  public static getInstance(task?: Task): Task {
-    return Object.freeze(this.constructor(task))
+  public static getInstance(task?: TaskParams): Task {
+    return Object.freeze(new Task(task))
   }
 
   public getId(): string {
@@ -45,7 +53,7 @@ class Task {
     return Task.getInstance({ ...this, userId })
   }
 
-  public setUser(user:User):Task {
+  public setUser(user: User): Task {
     return Task.getInstance({ ...this, user })
   }
 }

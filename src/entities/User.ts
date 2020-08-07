@@ -1,4 +1,4 @@
-interface UserParameters {
+interface UserParams {
   id?: string
   firstName?: string
   lastName?: string
@@ -13,7 +13,7 @@ class User {
   readonly email: string
   readonly password: string
 
-  private constructor(user?: UserParameters) {
+  private constructor(user?: UserParams) {
     this.id = user && user.id ? user.id : ""
     this.firstName = user && user.firstName ? user.firstName : ""
     this.lastName = user && user.lastName ? user.lastName : ""
@@ -21,7 +21,7 @@ class User {
     this.password = user && user.password ? user.password : ""
   }
 
-  public static getInstance(user?: UserParameters): User {
+  public static getInstance(user?: UserParams): User {
     return Object.freeze(new User(user))
   }
 

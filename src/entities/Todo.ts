@@ -1,15 +1,24 @@
 import Task from "./Task"
 
+interface TodoParams {
+  id?: string
+  name?: string
+  description?: string
+  isComplete?: boolean
+  taskId?: string
+  task?: Task
+}
+
 class Todo {
-  private id: string
-  private name: string
-  private description: string
-  private isComplete: boolean
+  readonly id: string
+  readonly name: string
+  readonly description: string
+  readonly isComplete: boolean
 
-  private taskId: string
-  private task?: Task
+  readonly taskId: string
+  readonly task?: Task
 
-  private constructor(todo?: Todo) {
+  private constructor(todo?: TodoParams) {
     this.id = todo && todo.id ? todo.id : ""
     this.name = todo && todo.name ? todo.name : ""
     this.description = todo && todo.description ? todo.description : ""
@@ -18,8 +27,8 @@ class Todo {
     this.task = todo && todo.task ? todo.task : Task.getInstance()
   }
 
-  public static getInstance(todo?: Todo): Todo {
-    return Object.freeze(this.constructor(todo))
+  public static getInstance(todo?: TodoParams): Todo {
+    return Object.freeze(new Todo(todo))
   }
 
   public getId():string{

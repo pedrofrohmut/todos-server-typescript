@@ -1,10 +1,10 @@
 import User from "../../entities/User"
 import UserModel from "../../models/UserModel"
 
-const findAllUsers = async () => {
+const findAllUsers = async (): Promise<User[]> => {
   try {
-    const usersBD = await UserModel.find()
-    return usersBD.map((user) =>
+    const usersDb = await UserModel.find()
+    return usersDb.map((user) =>
       User.getInstance({
         id: user._id,
         firstName: user.firstName,
