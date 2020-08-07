@@ -117,21 +117,6 @@ class TodoController {
       })
     }
   }
-
-  public async clearCompleteTodos(req: Request, res: Response): Promise<Response> {
-    try {
-      await TodoModel.deleteMany({ isComplete: true, task: req.params.id })
-      return res.status(200).json({
-        success: true,
-        messsage: "Success: complete Todos cleared from Task"
-      })
-    } catch (err) {
-      return res.status(500).json({
-        success: false,
-        message: "Server Error: error to clear complete todos: " + err.message
-      })
-    }
-  }
 }
 
 export default new TodoController()
