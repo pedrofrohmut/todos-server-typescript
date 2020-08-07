@@ -2,9 +2,19 @@ import express, { Application } from "express"
 import cors from "cors"
 import mongoose from "mongoose"
 
-import UserRoutes from "./routes/UserRoute"
 import TaskRoutes from "./routes/TaskRoute"
 import TodoRoutes from "./routes/TodoRoute"
+
+import AuthenticateUserRoute from "./routes/users/AuthenticateUserRoute"
+import CreateUserRoute from "./routes/users/CreateUserRoute"
+import FindAllUsersRoute from "./routes/users/FindAllUsersRoute"
+import LoginUserRoute from "./routes/users/LoginUserRoute"
+
+import CreateTaskRoute from "./routes/tasks/CreateTaskRoute"
+import DeleteTaskRoute from "./routes/tasks/DeleteTaskRoute"
+import FindTaskByIdRoute from "./routes/tasks/FindTaskByIdRoute"
+import FindTaskByUserIdRoute from "./routes/tasks/FindTaskByUserIdRoute"
+import UpdateTaskRoute from "./routes/tasks/UpdateTaskRoute"
 
 export default class App {
   public expressApp: Application
@@ -52,8 +62,20 @@ export default class App {
   }
 
   private useRoutes(): void {
-    this.expressApp.use("/api/v1/users", UserRoutes)
     this.expressApp.use("/api/v1/tasks", TaskRoutes)
     this.expressApp.use("/api/v1/todos", TodoRoutes)
+
+    // User Routes
+    this.expressApp.use("/api/v1/users", AuthenticateUserRoute)
+    this.expressApp.use("/api/v1/users", CreateUserRoute)
+    this.expressApp.use("/api/v1/users", FindAllUsersRoute)
+    this.expressApp.use("/api/v1/users", LoginUserRoute)
+
+    // Task Routes
+    this.expressApp.use("/api/v1/tasks", CreateTaskRoute)
+    this.expressApp.use("/api/v1/tasks", DeleteTaskRoute)
+    this.expressApp.use("/api/v1/tasks", FindTaskByIdRoute)
+    this.expressApp.use("/api/v1/tasks", FindTaskByUserIdRoute)
+    this.expressApp.use("/api/v1/tasks", UpdateTaskRoute)
   }
 }
