@@ -17,7 +17,6 @@ findTasksByUserIdRouter.get(
   UserMiddleware.verifyAuthenticationToken,
   UserMiddleware.validateUserFromToken,
   MongooseMiddleware.validateId,
-  UserMiddleware.checkUserExistsById,
   findTasksByUserIdController)
 
 export default findTasksByUserIdRouter

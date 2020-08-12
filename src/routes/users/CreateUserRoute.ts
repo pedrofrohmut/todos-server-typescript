@@ -17,7 +17,6 @@ createUserRouter.post(
   UserMiddleware.validateFirstName,
   UserMiddleware.validateLastName,
   UserMiddleware.validatePassword,
-  UserMiddleware.checkEmailIsNotTaken,
   createUserController)
 
 export default createUserRouter

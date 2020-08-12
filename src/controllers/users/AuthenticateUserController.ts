@@ -1,28 +1,28 @@
 import { Request, Response } from "express"
 
-import UserModel from "../../models/UserModel"
+import findUserById from "../../services/users/FindUserByIdService"
+
+import {
+  getServerErrorResponse,
+  getBadRequestResponse,
+  getSuccessResponse
+} from "../../utils/controllers/Responses"
 
 const authenticateUserControlller = async (req: Request, res: Response): Promise<Response> => {
   try {
-    // TODO: make service: findById that return only User
-    const user = await UserModel.findById(req.userToken!.id)
-    // TODO: take out non null assertion when possible
-    const { _id, firstName, lastName, email } = user!
-    return res.status(200).json({
-      success: true,
-      data: {
-        id: _id,
-        firstName,
-        lastName,
-        email
-      },
-      message: "Success: user authenticated"
-    })
+    if (!req.userToken || !req.userToken.id) {
+      return getBadRequestResponse(res, "No authentication token in the request. Or token is invalid")
+    }
+    const user = await findUserById(req.userToken.id)
+    if (!user) {
+      return getBadRequestResponse(res, "There is no user that matches the passed id", {
+        userId: req.userToken.id
+      })
+    }
+    const { id, firstName, lastName, email } = user
+    return getSuccessResponse(res, "User authenticated", { id, firstName, lastName, email })
   } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: "Server Error: error to authenticate user: " + err.message
-    })
+    return getServerErrorResponse(res, "Error to Authenticate user", err.message)
   }
 }
 

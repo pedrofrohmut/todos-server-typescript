@@ -18,7 +18,6 @@ createTaskRouter.post(
   UserMiddleware.verifyAuthenticationToken,
   UserMiddleware.validateUserFromToken,
   MongooseMiddleware.validateId,
-  UserMiddleware.checkUserExistsById,
   TaskMiddleware.validateTaskName,
   createTaskController)
 

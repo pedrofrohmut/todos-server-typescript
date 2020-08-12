@@ -15,8 +15,6 @@ loginUserRouter.post(
   "/login",
   UserMiddleware.validateEmail,
   UserMiddleware.validatePassword,
-  UserMiddleware.checkUserExistsByEmail,
-  UserMiddleware.matchPasswordByEmail,
   loginUserController)
 
 export default loginUserRouter

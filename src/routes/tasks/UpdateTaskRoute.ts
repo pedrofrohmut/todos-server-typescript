@@ -19,7 +19,6 @@ updateTaskRouter.put(
   UserMiddleware.validateUserFromToken,
   MongooseMiddleware.validateId,
   TaskMiddleware.validateTaskName,
-  TaskMiddleware.checkTaskExists,
   updateTaskController)
 
 export default updateTaskRouter

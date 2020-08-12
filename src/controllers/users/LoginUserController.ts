@@ -1,38 +1,35 @@
 import { Request, Response } from "express"
-import jwt from "jsonwebtoken"
 
-import UserModel from "../../models/UserModel"
+import findUserByEmail from "../../services/users/FindUserByEmailService"
+import isPasswordMatch from "../../services/authentication/IsPasswordMatchService"
+import getSignInToken from "../../services/authentication/GetSignInTokenService"
+
+import {
+  getServerErrorResponse,
+  getSuccessResponse,
+  getBadRequestResponse
+} from "../../utils/controllers/Responses"
 
 const loginUserController = async (req: Request, res: Response): Promise<Response> => {
+  const { email, password: requestPassword } = req.body
   try {
-    // TODO: make service: findUserByEmail
-    const user = await UserModel.findOne({ email: req.body.email })
+    const user = await findUserByEmail(email)
     if (!user) {
-      throw new Error("Server Error: User could not be recovered from database")
+      return getBadRequestResponse(res, "There is no user that matches the passed e-mail", {
+        email
+      })
     }
-    //
-    // TODO: create service: getUserToken
-    if (!process.env.JWT_SECRET) {
-      throw new Error("Missing ENV: No JWT_SECRET present in the current enviroment")
+    const { id, firstName, lastName, password: userPassword } = user
+    const isMatch = isPasswordMatch(requestPassword, userPassword)
+    if (!isMatch) {
+      return getBadRequestResponse(res, "The passed password do not match the e-mail passed", {
+        email
+      })
     }
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: 3600 })
-    //
-    return res.status(200).json({
-      success: true,
-      data: {
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        id: user._id,
-        token
-      },
-      message: "Success: user logged in"
-    })
+    const token = getSignInToken(id)
+    return getSuccessResponse(res, "User logged in", { id, firstName, lastName, email, token })
   } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: "Server Error: error to log in an user: " + err.message
-    })
+    return getServerErrorResponse(res, "Error to log in user", err.message)
   }
 }
 
