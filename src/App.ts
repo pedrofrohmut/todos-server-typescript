@@ -2,9 +2,6 @@ import express, { Application } from "express"
 import cors from "cors"
 import mongoose from "mongoose"
 
-import TaskRoutes from "./routes/TaskRoute"
-import TodoRoutes from "./routes/TodoRoute"
-
 import AuthenticateUserRoute from "./routes/users/AuthenticateUserRoute"
 import CreateUserRoute from "./routes/users/CreateUserRoute"
 import FindAllUsersRoute from "./routes/users/FindAllUsersRoute"
@@ -71,9 +68,6 @@ export default class App {
   }
 
   private useRoutes(): void {
-    this.expressApp.use("/api/v1/tasks", TaskRoutes)
-    this.expressApp.use("/api/v1/todos", TodoRoutes)
-
     // User Routes
     this.expressApp.use("/api/v1/users", AuthenticateUserRoute)
     this.expressApp.use("/api/v1/users", CreateUserRoute)
