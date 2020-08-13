@@ -2,7 +2,6 @@ import { Router } from "express"
 
 import * as UserMiddleware from "../../middlewares/UserMiddleware"
 import * as MongooseMiddleware from "../../middlewares/MongooseMiddleware"
-import * as TodoMiddleware from "../../middlewares/TodoMiddleware"
 
 import setTodoAsNotCompleteController from "../../controllers/todos/SetTodoAsNotCompleteController"
 
@@ -18,7 +17,6 @@ setTodoAsNotCompleteRouter.patch(
   UserMiddleware.verifyAuthenticationToken,
   UserMiddleware.validateUserFromToken,
   MongooseMiddleware.validateId,
-  TodoMiddleware.checkTodoExists,
   setTodoAsNotCompleteController)
 
 export default setTodoAsNotCompleteRouter

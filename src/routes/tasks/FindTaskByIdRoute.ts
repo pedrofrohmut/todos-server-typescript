@@ -2,7 +2,6 @@ import { Router } from "express"
 
 import * as UserMiddleware from "../../middlewares/UserMiddleware"
 import * as MongooseMiddleware from "../../middlewares/MongooseMiddleware"
-import * as TaskMiddleware from "../../middlewares/TaskMiddleware"
 
 import findTaskByIdController from "../../controllers/tasks/FindTaskByIdController"
 

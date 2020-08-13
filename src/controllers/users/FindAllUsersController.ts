@@ -1,6 +1,7 @@
 import { Request, Response } from "express"
 
-import findAllUsers from "../../services/user/FindAllUsersService"
+import findAllUsers from "../../services/users/FindAllUsersService"
+
 import { getSuccessResponse, getServerErrorResponse } from "../../utils/controllers/Responses"
 
 

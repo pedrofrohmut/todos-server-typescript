@@ -2,7 +2,6 @@ import { Router } from "express"
 
 import * as UserMiddleware from "../../middlewares/UserMiddleware"
 import * as MongooseMiddleware from "../../middlewares/MongooseMiddleware"
-import * as TodoMiddleware from "../../middlewares/TodoMiddleware"
 
 import deleteTodoController from "../../controllers/todos/DeleteTodoController"
 
@@ -18,7 +17,6 @@ deleteTodoRouter.delete(
   UserMiddleware.verifyAuthenticationToken,
   UserMiddleware.validateUserFromToken,
   MongooseMiddleware.validateId,
-  TodoMiddleware.checkTodoExists,
   deleteTodoController)
 
 export default deleteTodoRouter

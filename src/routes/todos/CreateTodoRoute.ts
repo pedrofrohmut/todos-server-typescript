@@ -2,7 +2,6 @@ import { Router } from "express"
 
 import * as UserMiddleware from "../../middlewares/UserMiddleware"
 import * as MongooseMiddleware from "../../middlewares/MongooseMiddleware"
-import * as TaskMiddleware from "../../middlewares/TaskMiddleware"
 import * as TodoMiddleware from "../../middlewares/TodoMiddleware"
 
 import createTodoController from "../../controllers/todos/CreateTodoController"
@@ -21,7 +20,6 @@ createTodoRouter.post(
   MongooseMiddleware.validateId,
   TodoMiddleware.validateName,
   TodoMiddleware.validateDescription,
-  TaskMiddleware.checkTaskExists,
   createTodoController)
 
 export default createTodoRouter

@@ -16,7 +16,6 @@ updateTodoRouter.put(
   TodoMiddleware.validateName,
   TodoMiddleware.validateDescription,
   TodoMiddleware.validateTask,
-  TodoMiddleware.checkTodoExists,
   updateTodoController)
 
 export default updateTodoRouter

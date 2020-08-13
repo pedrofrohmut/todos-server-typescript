@@ -2,7 +2,6 @@ import { Router } from "express"
 
 import * as UserMiddleware from "../../middlewares/UserMiddleware"
 import * as MongooseMiddleware from "../../middlewares/MongooseMiddleware"
-import * as TaskMiddleware from "../../middlewares/TaskMiddleware"
 
 import FindTodosByTaskIdController from "../../controllers/todos/FindTodosByTaskIdController"
 
@@ -18,7 +17,6 @@ findTodosByTaskIdRouter.get(
   UserMiddleware.verifyAuthenticationToken,
   UserMiddleware.validateUserFromToken,
   MongooseMiddleware.validateId,
-  TaskMiddleware.checkTaskExists,
   FindTodosByTaskIdController)
 
 

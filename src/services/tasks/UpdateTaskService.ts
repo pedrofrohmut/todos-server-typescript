@@ -1,21 +1,22 @@
 import Task from "../../entities/Task"
 import TaskModel from "../../models/TaskModel"
 
-interface Params { 
+interface Params {
   id: string
-  name: string 
+  name: string
 }
 
-const updateTask = async (task:Params): Promise<Task> => {
+const updateTask = async (task: Params): Promise<Task> => {
+  const { id, name } = task
   try {
-    const taskDb = await TaskModel.findById(task.id)
+    const taskDb = await TaskModel.findById(id)
     if (!taskDb) {
-      throw new Error("Task not found to update")
+      throw new Error("Task not found and could not be updated")
     }
-    await TaskModel.updateOne({ _id: task.id }, { name: task.name })
-    return Task.getInstance({ id: task.id, name: task.name })
+    await TaskModel.updateOne({ _id: id }, { name })
+    return Task.getInstance({ id, name, userId: taskDb.user })
   } catch (err) {
-    throw new Error("UpdateTaskService: Error to update a task: " + err.message)
+    throw new Error("Error to update a task")
   }
 }
 
