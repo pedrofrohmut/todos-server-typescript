@@ -8,8 +8,11 @@ interface Params {
 
 const createUser = async ({ name, user }: Params): Promise<Task> => {
   try {
-    await TaskModel.create({ name, user })
-    return Task.getInstance({ name, userId: user })
+    const createdTaskDb = await TaskModel.create({ name, user })
+    if (!createdTaskDb) {
+      throw new Error("Could not create a task")
+    }
+    return Task.getInstance({ id: createdTaskDb._id, name, userId: user })
   } catch (err) {
     throw new Error("CreateTaskService: Error to create a task: " + err.message)
   }

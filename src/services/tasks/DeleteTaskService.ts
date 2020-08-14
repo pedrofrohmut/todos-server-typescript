@@ -7,7 +7,7 @@ const deleteTask = async (taskId: string): Promise<Task> => {
     if (!taskDb) {
       throw new Error("Task not found to delete")
     }
-    const task = Task.getInstance({ name: taskDb.name, userId: taskDb.user })
+    const task = Task.getInstance({ id: taskId, name: taskDb.name, userId: taskDb.user })
     await TaskModel.deleteOne({ _id: taskId })
     return task
   } catch (err) {

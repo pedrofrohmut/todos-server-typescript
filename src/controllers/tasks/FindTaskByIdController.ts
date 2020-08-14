@@ -9,6 +9,7 @@ import {
 } from "../../utils/controllers/Responses"
 
 const findTaskByIdController = async (req: Request, res: Response): Promise<Response> => {
+  console.log("FIND TASK BY ID")
   const taskId = req.params.id
   try {
     const task = await findTaskById(taskId)

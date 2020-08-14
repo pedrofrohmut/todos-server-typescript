@@ -5,18 +5,21 @@ import * as MongooseMiddleware from "../../middlewares/MongooseMiddleware"
 
 import findTaskByIdController from "../../controllers/tasks/FindTaskByIdController"
 
-const findTaskByIdRouter = Router()
-
 /**
  * @Desc: Get a task by its id
  * @Route: GET api/v1/tasks/:id
  * @Access: Private
  */
-findTaskByIdRouter.get(
-  "/:id",
-  UserMiddleware.verifyAuthenticationToken,
-  UserMiddleware.validateUserFromToken,
-  MongooseMiddleware.validateId,
-  findTaskByIdController)
+const findTaskByIdRoute = (router: Router): Router => {
+  console.log("TASK ID ROUTE")
+  router.get(
+    "/:id",
+    UserMiddleware.verifyAuthenticationToken,
+    UserMiddleware.validateUserFromToken,
+    MongooseMiddleware.validateId,
+    findTaskByIdController
+  )
+  return router
+}
 
-export default findTaskByIdRouter
+export default findTaskByIdRoute

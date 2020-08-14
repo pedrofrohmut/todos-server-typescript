@@ -5,19 +5,21 @@ import * as MongooseMiddleware from "../../middlewares/MongooseMiddleware"
 
 import FindTodosByTaskIdController from "../../controllers/todos/FindTodosByTaskIdController"
 
-const findTodosByTaskIdRouter = Router()
-
 /**
  * @Desc: Find the todos that has the same task attribute
  * @Route: GET api/v1/todos/task/:id
  * @Access: Private
  */
-findTodosByTaskIdRouter.get(
-  "/task/:id",
-  UserMiddleware.verifyAuthenticationToken,
-  UserMiddleware.validateUserFromToken,
-  MongooseMiddleware.validateId,
-  FindTodosByTaskIdController)
+const findTodoByTaskIdRoute = (router: Router): Router => {
+  console.log("FIND TODO BY T A S K ID")
+  router.get(
+    "/task/:id",
+    UserMiddleware.verifyAuthenticationToken,
+    UserMiddleware.validateUserFromToken,
+    MongooseMiddleware.validateId,
+    FindTodosByTaskIdController
+  )
+  return router
+}
 
-
-export default findTodosByTaskIdRouter
+export default findTodoByTaskIdRoute

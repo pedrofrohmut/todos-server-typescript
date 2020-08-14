@@ -21,7 +21,6 @@
       "anonymous": "never",
       "named": "never",
       "asyncArrow": "always"
-    }],
-    "no-inferrable-types": [true, "ignore-params", "ignore-properties"]
+    }]
   }
 }

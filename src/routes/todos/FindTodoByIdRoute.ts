@@ -5,18 +5,21 @@ import * as MongooseMiddleware from "../../middlewares/MongooseMiddleware"
 
 import findTodoByIdController from "../../controllers/todos/FindTodoByIdController"
 
-const findTodoByIdRouter = Router()
-
 /**
  * @Desc: Find todo by its id
  * @Route: GET api/v1/todos/:id
  * @Access: Private
  */
-findTodoByIdRouter.get(
-  "/:id",
-  UserMiddleware.verifyAuthenticationToken,
-  UserMiddleware.validateUserFromToken,
-  MongooseMiddleware.validateId,
-  findTodoByIdController)
+const findTodoByIdRoute = (router: Router): Router => {
+  console.log("FIND TODO BY ID")
+  router.get(
+    "/:id",
+    UserMiddleware.verifyAuthenticationToken,
+    UserMiddleware.validateUserFromToken,
+    MongooseMiddleware.validateId,
+    findTodoByIdController
+  )
+  return router
+}
 
-export default findTodoByIdRouter
+export default findTodoByIdRoute

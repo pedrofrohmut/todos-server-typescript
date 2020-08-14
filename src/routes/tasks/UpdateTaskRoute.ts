@@ -6,19 +6,21 @@ import * as TaskMiddleware from "../../middlewares/TaskMiddleware"
 
 import updateTaskController from "../../controllers/tasks/UpdateTaskController"
 
-const updateTaskRouter = Router()
-
 /**
  * @Desc: Update a task by its id
  * @Route: PUT api/v1/tasks/:id
  * @Access: Private
  */
-updateTaskRouter.put(
-  "/:id",
-  UserMiddleware.verifyAuthenticationToken,
-  UserMiddleware.validateUserFromToken,
-  MongooseMiddleware.validateId,
-  TaskMiddleware.validateTaskName,
-  updateTaskController)
+const updateTaskRoute = (router: Router): Router => {
+  router.put(
+    "/:id",
+    UserMiddleware.verifyAuthenticationToken,
+    UserMiddleware.validateUserFromToken,
+    MongooseMiddleware.validateId,
+    TaskMiddleware.validateTaskName,
+    updateTaskController
+  )
+  return router
+}
 
-export default updateTaskRouter
+export default updateTaskRoute

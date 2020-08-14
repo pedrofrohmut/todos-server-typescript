@@ -4,17 +4,19 @@ import * as UserMiddleware from "../../middlewares/UserMiddleware"
 
 import authenticateUserController from "../../controllers/users/AuthenticateUserController"
 
-const authenticateUserRouter = Router()
-
 /**
  * @Desc: Authenticate user from Request Header Auth-Token
  * @Route: GET api/v1/users/authenticate
  * @Access: Private
  */
-authenticateUserRouter.get(
-  "/authenticate",
-  UserMiddleware.verifyAuthenticationToken,
-  UserMiddleware.validateUserFromToken,
-  authenticateUserController)
+const authenticateUserRoute = (router: Router): Router => {
+  router.get(
+    "/authenticate",
+    UserMiddleware.verifyAuthenticationToken,
+    UserMiddleware.validateUserFromToken,
+    authenticateUserController
+  )
+  return router
+}
 
-export default authenticateUserRouter
+export default authenticateUserRoute

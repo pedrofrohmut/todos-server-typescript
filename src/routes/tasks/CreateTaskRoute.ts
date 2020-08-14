@@ -6,19 +6,21 @@ import * as TaskMiddleware from "../../middlewares/TaskMiddleware"
 
 import createTaskController from "../../controllers/tasks/CreateTaskController"
 
-const createTaskRouter = Router()
-
 /**
  * @Desc: Create a new task for an user
  * @Route: POST api/v1/tasks
  * @Access: Private
  */
-createTaskRouter.post(
-  "/user/:id",
-  UserMiddleware.verifyAuthenticationToken,
-  UserMiddleware.validateUserFromToken,
-  MongooseMiddleware.validateId,
-  TaskMiddleware.validateTaskName,
-  createTaskController)
+const createTaskRoute = (router: Router): Router => {
+  router.post(
+    "/user/:id",
+    UserMiddleware.verifyAuthenticationToken,
+    UserMiddleware.validateUserFromToken,
+    MongooseMiddleware.validateId,
+    TaskMiddleware.validateTaskName,
+    createTaskController
+  )
+  return router
+}
 
-export default createTaskRouter
+export default createTaskRoute
