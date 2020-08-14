@@ -11,7 +11,6 @@ import findTaskByIdController from "../../controllers/tasks/FindTaskByIdControll
  * @Access: Private
  */
 const findTaskByIdRoute = (router: Router): Router => {
-  console.log("TASK ID ROUTE")
   router.get(
     "/:id",
     UserMiddleware.verifyAuthenticationToken,

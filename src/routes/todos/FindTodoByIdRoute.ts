@@ -11,7 +11,6 @@ import findTodoByIdController from "../../controllers/todos/FindTodoByIdControll
  * @Access: Private
  */
 const findTodoByIdRoute = (router: Router): Router => {
-  console.log("FIND TODO BY ID")
   router.get(
     "/:id",
     UserMiddleware.verifyAuthenticationToken,

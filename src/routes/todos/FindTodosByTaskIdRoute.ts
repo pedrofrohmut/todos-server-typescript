@@ -11,7 +11,6 @@ import FindTodosByTaskIdController from "../../controllers/todos/FindTodosByTask
  * @Access: Private
  */
 const findTodoByTaskIdRoute = (router: Router): Router => {
-  console.log("FIND TODO BY T A S K ID")
   router.get(
     "/task/:id",
     UserMiddleware.verifyAuthenticationToken,
