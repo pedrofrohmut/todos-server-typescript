@@ -1,100 +1,15 @@
 import { Request, Response, NextFunction } from "express"
 import jwt from "jsonwebtoken"
-import bcrypt from "bcryptjs"
+
+import UserModel from "../models/UserModel"
 
 import * as MongooseValidator from "../validators/MongooseValidator"
 import * as UserValidator from "../validators/UserValidator"
-import UserModel from "../models/UserModel"
 
 interface IUserToken {
   id?: string
   iat?: number
   exp?: number
-}
-
-export const checkUserExistsById = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<Response | void> => {
-  const { id } = req.params
-  try {
-    const user = await UserModel.findById(id)
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "Not Found: no User found with the passed ID",
-        data: { id }
-      })
-    }
-  } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: "Server Error: error to check if user exists by ID: " + err.message
-    })
-  }
-  next()
-}
-
-export const checkUserExistsByEmail = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<Response | void> => {
-  const { email } = req.body
-  try {
-    const user = await UserModel.findOne({ email })
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "Not Found: no User found with the passed e-mail",
-        data: { email }
-      })
-    }
-  } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: "Server Error: error to check if user exists by e-mail: " + err.message
-    })
-  }
-  next()
-}
-
-export const matchPasswordByEmail = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<Response | void> => {
-  const { email, password } = req.body
-  try {
-    const user = await UserModel.findOne({ email })
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "Not Found: no User found with the passed e-mail",
-        data: { email }
-      })
-    }
-    if (!user.password) {
-      throw new Error("Server Error: the User password could not be recovered")
-    }
-    const isMatch = await bcrypt.compare(password, user.password)
-    if (!isMatch) {
-      return res.status(400).json({
-        success: false,
-        message:
-          "Bad Request: the User password passed do NOT match the password from the " +
-          "User of this e-mail",
-        data: { email }
-      })
-    }
-  } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: "Server Error: error to check if user exists by e-mail: " + err.message
-    })
-  }
-  next()
 }
 
 export const verifyAuthenticationToken = async (
@@ -224,23 +139,6 @@ export const validatePassword = async (
       success: false,
       message: "Bad Request: the User password is not valid",
       data: { userPassword }
-    })
-  }
-  next()
-}
-
-export const checkEmailIsNotTaken = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<Response | void> => {
-  const userEmail = req.body.email
-  const user = await UserModel.findOne({ email: userEmail })
-  if (user) {
-    return res.status(400).json({
-      success: false,
-      message: "Bad Request: the User e-mail is already taken",
-      data: { userEmail }
     })
   }
   next()

@@ -1,33 +1,9 @@
 import { Request, Response, NextFunction } from "express"
 
-import TodoModel from "../models/TodoModel"
 import TaskModel from "../models/TaskModel"
+
 import * as MongooseValidator from "../validators/MongooseValidator"
 import * as TodoValidator from "../validators/TodoValidator"
-
-export const checkTodoExists = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<Response | void> => {
-  const todoId = req.params.id
-  try {
-    const todo = await TodoModel.findById(todoId)
-    if (!todo) {
-      return res.status(404).json({
-        success: false,
-        message: "Not Found: no Todo found with the passed ID",
-        data: { todoId }
-      })
-    }
-  } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: "Server Error: error to check if Todo exists: " + err.message
-    })
-  }
-  next()
-}
 
 export const validateName = async (
   req: Request,

@@ -29,8 +29,8 @@
   },
   "scripts": {
     "start": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "nodemon-dev": "nodemon --exec ts-node src/server.ts",
-    "nodemon": "nodemon --exec ts-node-dev --respawn --transpile-only src/server.ts",
+    "nodemon": "nodemon --exec ts-node src/server.ts",
+    "nodemon-dev": "nodemon --exec ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "tsc"
   },
   "dependencies": {
